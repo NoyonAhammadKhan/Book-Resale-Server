@@ -15,7 +15,7 @@ app.use(express.json())
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.4hum0hz.mongodb.net/?retryWrites=true&w=majority`;
-// console.log(uri)
+console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
@@ -37,6 +37,8 @@ function verifyJWT(req, res, next) {
 
 async function run() {
     try {
+        // const bookingsCollection = client.db('doctorsPortal').collection('bookings');
+        const blogsCollection = client.db('BookResale').collection('blogs');
        
 
         const verifyAdmin = async (req, res, next) => {
@@ -49,6 +51,7 @@ async function run() {
             }
             next()
         }
+        
 
         app.post('/users', async (req, res) => {
             const user = req.body;
@@ -69,7 +72,11 @@ async function run() {
 
    
 
-        
+        app.get('/blogs',async(req,res)=>{
+            const query={}
+            const blogs = await blogsCollection.find(query).toArray();
+            res.send(blogs)
+        })
 
     }
     finally {
