@@ -40,7 +40,7 @@ async function run() {
         // const bookingsCollection = client.db('doctorsPortal').collection('bookings');
         const blogsCollection = client.db('BookResale').collection('blogs');
         const booksCollection =client.db('BooKResale').collection('books');
-
+        const categoryCollection = client.db('BookResale').collection('categories');
         const verifyAdmin = async (req, res, next) => {
             const decodedEmail = req.decoded.email;
             const query = { email: decodedEmail }
@@ -80,6 +80,12 @@ async function run() {
             const query={}
             const blogs = await blogsCollection.find(query).toArray();
             res.send(blogs)
+        })
+
+        app.get('/categories',async(req,res)=>{
+            const query={}
+            const categories = await categoryCollection.find(query).toArray();
+            res.send(categories);
         })
 
     }
