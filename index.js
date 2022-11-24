@@ -39,7 +39,7 @@ async function run() {
     try {
         // const bookingsCollection = client.db('doctorsPortal').collection('bookings');
         const blogsCollection = client.db('BookResale').collection('blogs');
-       
+        const booksCollection =client.db('BooKResale').collection('books');
 
         const verifyAdmin = async (req, res, next) => {
             const decodedEmail = req.decoded.email;
@@ -69,7 +69,11 @@ async function run() {
             }
             res.status(403).send({ accessToken: '' })
         })
-
+        app.post('/books',async(req,res)=>{
+            const book = req.body;
+            const result=booksCollection.insertOne(book);
+            res.send(result);
+        })
    
 
         app.get('/blogs',async(req,res)=>{
