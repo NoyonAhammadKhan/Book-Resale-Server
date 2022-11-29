@@ -149,6 +149,12 @@ async function run() {
             const result = await bookingCollection.insertOne(bookingBook)
             res.send(result)
         })
+        app.get('/booking',async(req,res)=>{
+            const userEmail = req.query.email;
+            const query={userEmail:userEmail}
+            const result = await bookingCollection.find(q).toArray()
+            res.send(result)
+        })
 
        
         app.get('/advertise',async(req,res)=>{
