@@ -68,6 +68,12 @@ async function run() {
             const users = await usersCollection.find(query).toArray();
             res.send(users);
         })
+        app.delete('/users',async(req,res)=>{
+            const id=req.query.id;
+            const query={_id:ObjectId(id)}
+            const result = await usersCollection.deleteOne(query);
+            res.send(result);
+        })
 
         app.get('/jwt', async (req, res) => {
             const email = req.query.email;
